@@ -22,7 +22,7 @@ public class DemoSecurityConfig extends WebSecurityConfigurerAdapter {
 		UserBuilder users = User.withDefaultPasswordEncoder();
 
 		auth.inMemoryAuthentication()
-				.withUser(users.username("teddy").password("test123").roles("EMPLOYEE", "HR-ADMIN"))
+				.withUser(users.username("teddy").password("test123").roles("EMPLOYEE"))
 				.withUser(users.username("melkam").password("test123").roles("EMPLOYEE", "MANAGER"))
 				.withUser(users.username("kalkidan").password("test123").roles("EMPLOYEE", "ADMIN"));
 	}
@@ -30,11 +30,25 @@ public class DemoSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 
-		http.authorizeRequests().anyRequest().authenticated().and().formLogin().loginPage("/showMyLoginPage")
-				.loginProcessingUrl("/authenticateTheUser").permitAll()
+		http.authorizeRequests()
+				/*
+				 * .anyRequest() 
+				 * .authenticated()
+				 */
+		// .anyRequest().authenticated() gives access to those who are able to use their username and password
+		// if we want to filter based on specific access for a specific role, we use .antMatchers().hasRoles() as follows!
+			.antMatchers("/").hasRole("EMPLOYEE") // all employees have access to landing page!
+			.antMatchers("/leaders/**").hasRole("MANAGER") // " leaders/** " means leaders and its sub-folders/files
+			.antMatchers("/systems/**").hasRole("ADMIN")
+			.and()
+			.formLogin()
+			.loginPage("/showMyLoginPage")
+				.loginProcessingUrl("/authenticateTheUser")
+				.permitAll()
 				// above this line is login support and below this line is logout support. It
 				// will be appended using (.)
-				.and().logout().permitAll();
+				.and()
+				.logout().permitAll();
 		// permitAll allows everyone to see the login/logout form/message.
 	}
 
