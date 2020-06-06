@@ -11,7 +11,8 @@ import org.springframework.security.core.userdetails.User.UserBuilder;
 @Configuration
 @EnableWebSecurity
 public class DemoSecurityConfig extends WebSecurityConfigurerAdapter {
-
+	// we create this class using superclass as WebSecurityConfigurerAdapter
+	// then we need to override methods. sourse --> Override/implement Methods --> choose the methods below!
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 
@@ -21,27 +22,20 @@ public class DemoSecurityConfig extends WebSecurityConfigurerAdapter {
 		UserBuilder users = User.withDefaultPasswordEncoder();
 
 		auth.inMemoryAuthentication()
-				.withUser(users.username("teddy").password("test123").roles("EMPLOYEE"))
-				.withUser(users.username("melkam").password("test123").roles("MANAGER"))
-				.withUser(users.username("kalkidan").password("test123").roles("ADMIN"));
-			}
+				.withUser(users.username("teddy").password("test123").roles("EMPLOYEE", "HR-ADMIN"))
+				.withUser(users.username("melkam").password("test123").roles("EMPLOYEE", "MANAGER"))
+				.withUser(users.username("kalkidan").password("test123").roles("EMPLOYEE", "ADMIN"));
+	}
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		
-		http.authorizeRequests()
-			.anyRequest().authenticated()
-		.and()
-		.formLogin()
-			.loginPage("/showMyLoginPage")
-			.loginProcessingUrl("/authenticateTheUser")
-			.permitAll()
-			// above this line is login support and below this line is logout support. It will be appended using (.)
-			.and()
-			.logout().permitAll();
-		// permitAll allows everyone to see the login/logout form/message. 
-	}
-	
 
-	
+		http.authorizeRequests().anyRequest().authenticated().and().formLogin().loginPage("/showMyLoginPage")
+				.loginProcessingUrl("/authenticateTheUser").permitAll()
+				// above this line is login support and below this line is logout support. It
+				// will be appended using (.)
+				.and().logout().permitAll();
+		// permitAll allows everyone to see the login/logout form/message.
+	}
+
 }
