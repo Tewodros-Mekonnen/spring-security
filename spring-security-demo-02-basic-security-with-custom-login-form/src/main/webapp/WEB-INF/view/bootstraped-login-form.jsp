@@ -39,6 +39,11 @@
 				<div style="padding-top: 30px" class="panel-body">
 
 					<!-- Login Form -->
+					<!-- ${pageContext.request.contextPath}/authenticateTheUser = gives us dynamic access to the name of context path. 
+	    				 contextPath = "http://localhost:8081/spring-security-demo-02-basic-security". Since we are not hardCoding, 
+	    				 even if we change our contextPath, program will run! 
+	     				 authenticateTheUser = is defined in DemoSecurityConfig.java file-->
+	     
 					<form:form
 						action="${pageContext.request.contextPath}/authenticateTheUser"
 						method="POST" class="form-horizontal">
@@ -46,7 +51,7 @@
 						<!-- Place for messages: error, alert etc ... -->
 						<!-- Check for login error. By default, spring security will send the user back to the login page and 
 				              append an error(?error) parameter to the URL
-				              . e.x. http://localhost:8081/spring-security-demo-02-basic-security-with-custom-login-form/showMyLoginPage?error -->
+				       . e.x. http://localhost:8081/spring-security-demo-02-basic-security-with-custom-login-form/showMyLoginPage?error -->
 
 						<div class="form-group">
 							<div class="col-xs-15">
@@ -58,7 +63,7 @@
 
 									<c:if test="${param.logout != null}">
 										<div class="alert alert-success col-xs-offset-1 col-xs-10">
-											You have been logged out.</div>
+											You have been logged out successfully!</div>
 									</c:if>
 
 								</div>
