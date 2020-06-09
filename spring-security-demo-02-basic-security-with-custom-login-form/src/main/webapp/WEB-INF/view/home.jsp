@@ -20,14 +20,26 @@
 		     	<br><br>
 		     	Role(s): <security:authentication property="principal.authorities"/> <!-- authorities is same as role! -->
 		     </p>
-	     <hr>
 	     
-	     <!-- add a link to point to " /leaders " ... this is for the managers! -->
-		     <p>
-		     	<a href="${pageContext.request.contextPath}/leaders" >LeaderShip Meeting</a>
-		     	(only for Managers!)
-		     </p>
 	     
+	     	<!-- by adding  <security:authorize access="hasRole('MANAGER')"> </security:authorize>, we can prevent displaying 
+	     	     content that can not be accessed by the user. All we need to do is just add the above tag in this page, no other 
+	     	     setup!-->
+		     <!-- add a link to point to " /leaders " ... this is for the managers! -->
+		     <security:authorize access="hasRole('MANAGER')" >
+		    	 <p>
+			     	<a href="${pageContext.request.contextPath}/leaders" >LeaderShip Meeting</a>
+			     	(Only for Managers!)
+			     </p>
+		     </security:authorize>
+			     
+			     
+			  <!-- add a link to point to "/systems"... this is for system administers only --> 
+			  <security:authorize access="hasRole('ADMIN')" >
+				  <p>
+				 	 <a href="${pageContext.request.contextPath}/systems" >IT Systems Meeting </a>(Only for IT Administrators!)
+				  </p>
+			  </security:authorize>
 	     <hr>
 
 	<!-- add logout button -->

@@ -48,8 +48,12 @@ public class DemoSecurityConfig extends WebSecurityConfigurerAdapter {
 				// above this line is login support and below this line is logout support. It
 				// will be appended using (.)
 				.and()
-				.logout().permitAll();
-		// permitAll allows everyone to see the login/logout form/message.
+				.logout().permitAll()
+		// permitAll allows everyone to see the login/logout form/message.		
+				.and()
+				.exceptionHandling().accessDeniedPage("/access-denied");
+		// .exceptionHandling().accessDeniedPage(); this will allow us to build our own access denied page instead of 403, 
+		// forbidden page!
 	}
 
 }
