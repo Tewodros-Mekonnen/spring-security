@@ -18,5 +18,19 @@ public class DemoController {
 
 		return "leaders";
 	}
+	
+	// add request mapping for /systems
+	@GetMapping("/systems")
+	public String showSystem() {
+
+		return "systems";
+	}
+		
+	// add request mapping for /access-denied
+	@GetMapping("/access-denied")
+	public String showAccessDenied() {
+
+		return "access-denied";
+	}	
 
 }
