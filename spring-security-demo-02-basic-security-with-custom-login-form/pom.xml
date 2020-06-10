@@ -57,7 +57,22 @@
 			<artifactId>spring-security-taglibs</artifactId>
 			<version>${springsecurity.version}</version>
 		</dependency>
-
+		
+		<!-- adding MySQL and C3P0(this is connection pool) support -->
+		<!-- we need MySQL and c3p0 support to set Spring security username and password inside JDBC database! -->
+		<!-- if we get the red x mark on the project while adding this dependencies, just rightClick on project ... Maven ..
+		     then click on updateProject, this should fix similar issues! -->
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>5.1.45</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.mchange</groupId>
+			<artifactId>c3p0</artifactId>
+			<version>0.9.5.2</version>
+		</dependency>
 
 
 		<!-- Servlet, JSP and JSTL support -->
