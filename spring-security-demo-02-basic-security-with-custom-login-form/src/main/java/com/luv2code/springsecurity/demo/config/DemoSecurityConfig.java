@@ -1,30 +1,36 @@
 package com.luv2code.springsecurity.demo.config;
 
+import javax.sql.DataSource;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.User.UserBuilder;
+
 
 @Configuration
 @EnableWebSecurity
 public class DemoSecurityConfig extends WebSecurityConfigurerAdapter {
 	// we create this class using superclass as WebSecurityConfigurerAdapter
 	// then we need to override methods. sourse --> Override/implement Methods --> choose the methods below!
+	
+	
+	// add a reference to security data source
+			@Autowired
+			private DataSource securityDataSource;
+
+	
+	
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 
-		// super.configure(auth);
-
-		// add users for in-memory authentication
-		UserBuilder users = User.withDefaultPasswordEncoder();
-
-		auth.inMemoryAuthentication()
-				.withUser(users.username("teddy").password("test123").roles("EMPLOYEE"))
-				.withUser(users.username("melkam").password("test123").roles("EMPLOYEE", "MANAGER"))
-				.withUser(users.username("kalkidan").password("test123").roles("EMPLOYEE", "ADMIN"));
+		
+		// using the following code, we can avoid hard-coding users. to see manual set up see spring notes, search for spring security
+		// the following code tell spring security to use JDBC authentication with our data source
+		// see DemoAppConfig.java file to see the complete no-xml java only configuration!!
+		auth.jdbcAuthentication().dataSource(securityDataSource);
 	}
 
 	@Override
