@@ -14,7 +14,7 @@
 		by searching "spring-security-web" inside maven.org's central repository. 
 		Version for spring framework will be in the POM list. take version for "<artifactId>spring-context</artifactId>". -->
 	<properties>
-		<springframework.version>5.2.6.RELEASE</springframework.version>
+		<springframework.version>5.3.18</springframework.version>
 		<springsecurity.version>5.3.2.RELEASE</springsecurity.version>
 
 		<!-- these two need to be same as java version installed in our computer! -->
